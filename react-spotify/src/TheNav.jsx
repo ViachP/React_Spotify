@@ -6,6 +6,7 @@ import {
   PlusCircleIcon,
   HeartIcon,
 } from "@heroicons/react/24/outline";
+import NavItem from "./NavItem";
 
 const activeNavItemClasses =
   "flex items-center text-white bg-[#282828] mx-2 px-4 py-2 rounded";
@@ -43,10 +44,9 @@ const TheNav = () => {
   return (
     <nav>
       {navItems.map(({ classes, icon, label }) => (
-        <a href="/" className={classes} key={label}>
-          {icon}
-          <span className="ml-4 text-sm font-semibold">{label}</span>
-        </a>
+        <NavItem key={label} classes={classes} icon={icon}>
+          {label}
+        </NavItem>
       ))}
     </nav>
   );
