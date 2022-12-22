@@ -4,6 +4,8 @@ import {
   ChevronRightIcon,
   Bars3Icon,
 } from "@heroicons/react/24/outline";
+import TheButtonRegister from "./TheButtonRegister";
+import TheButtonLogin from "./TheButtonLogin";
 
 const TheHeader = () => {
   return (
@@ -23,12 +25,8 @@ const TheHeader = () => {
         </a>
       </div>
       <div>
-        <button className="text-white text-xs font-semibold leading-5 tracking-widest uppercase py-[9px] px-[17px] sm:px-[38px] rounded-full hover:scale-105">
-          Sign Up
-        </button>
-        <button className="bg-white text-[#2e2e2e] text-xs font-semibold leading-5 tracking-widest uppercase py-[9px] px-[17px] sm:px-[38px] rounded-full hover:scale-105">
-          Log In
-        </button>
+        <TheButtonRegister />
+        <TheButtonLogin />
       </div>
     </header>
   );
