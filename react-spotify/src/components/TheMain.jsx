@@ -1,6 +1,13 @@
 import React from "react";
 import Playlist from "./Playlist";
 
+const playlist = {
+  tittle: "Playlist Title",
+  description:
+    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat, possimuslaborum ab laudantium natus voluptates!",
+  coverUrl: "https://fakeimg.pl/600/581c87/fff?text=Cover&font=lobster",
+};
+
 const TheMain = () => {
   return (
     <main className="text-white relative bg-gradient-to-b from-[#1f1f1f] to-[#121212]">
@@ -21,7 +28,10 @@ const TheMain = () => {
             </a>
           </div>
           <div className="grid sm:grid-cols-playlists-mobile md:grid-cols-playlists-tablet lg:grid-cols-playlists-desktop gap-5">
-            <Playlist />
+            <Playlist
+              {...playlist}
+              classes="relative p-4 rounded-md bg-[#181818] hover:bg-[#272727] duration-200 group"
+            />
             <a
               href="/"
               className="p-4 rounded-md bg-[#181818] hover:bg-[#272727] duration-200 group hidden sm:block"
