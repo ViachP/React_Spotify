@@ -31,6 +31,9 @@ const menuItems = [
 
 const Playlist = ({ classes, coverUrl, title, description }) => {
   const [isContextMenuOpen, setIsContextMenuOpen] = useState(false);
+  const bgClasses = isContextMenuOpen
+  ? 'bg-[#272727]'
+  : 'bg-[#181818] hover:bg-[#272727]';
 
   function openContexMenu(event) {
     event.preventDefault();
@@ -46,7 +49,7 @@ const Playlist = ({ classes, coverUrl, title, description }) => {
   return (
     <a
       href="/"
-      className={`relative p-4 rounded-md bg-[#181818] hover:bg-[#272727] duration-200 group ${classes}`}
+      className={`relative p-4 rounded-md duration-200 group ${classes} ${bgClasses}`}
       onClick={(event) => event.preventDefault()}
       onContextMenu={openContexMenu}
     >
