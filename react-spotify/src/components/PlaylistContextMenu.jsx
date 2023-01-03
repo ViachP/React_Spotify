@@ -1,19 +1,23 @@
 import React from "react";
+import { useEffect } from "react";
 import PlaylistContextMenuItem from "./PlaylistContextMenuItem";
 
+const PlaylistContextMenu = ({ classes, menuItems, onClose }) => {
+  useEffect(() => {
+    document.addEventListener("mousedown",onClose);
 
-
-const PlaylistContextMenu = ({classes, menuItems, onClose}) => {
-
-document.addEventListener('mousedown', onClose)
+    return () => {
+      document.removeEventListener("mousedown", onClose);
+    };
+  });
 
   return (
     <ul className={classes}>
       {menuItems.map(({ label, subMenuItems }) => (
-        <PlaylistContextMenuItem key={label} subMenuItems={subMenuItems}>{label}</PlaylistContextMenuItem>
+        <PlaylistContextMenuItem key={label} subMenuItems={subMenuItems}>
+          {label}
+        </PlaylistContextMenuItem>
       ))}
-
-     
     </ul>
   );
 };
