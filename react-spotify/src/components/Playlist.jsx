@@ -1,5 +1,5 @@
-import React, { useLayoutEffect,useRef } from "react";
-import { useState } from "react";
+import React, { useLayoutEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import PlaylistButtonPlay from "./PlaylistButtonPlay";
 import PlaylistContextMenu from "./PlaylistContextMenu";
 import PlaylistCover from "./PlaylistCover";
@@ -29,18 +29,24 @@ const menuItems = [
   },
 ];
 
-const clickPosition = {x: null, y: null};
+const clickPosition = { x: null, y: null };
 
-const Playlist = ({ classes, coverUrl, title, description, toggleScrolling }) => {
+const Playlist = ({
+  classes,
+  coverUrl,
+  title,
+  description,
+  toggleScrolling,
+}) => {
   const [isContextMenuOpen, setIsContextMenuOpen] = useState(false);
   const contextMenuRef = useRef(null);
   const bgClasses = isContextMenuOpen
-  ? 'bg-[#272727]'
-  : 'bg-[#181818] hover:bg-[#272727]';
+    ? "bg-[#272727]"
+    : "bg-[#181818] hover:bg-[#272727]";
 
-  function updateContextMenuPosition () {
-    contextMenuRef.current.style.top = `${clickPosition.y}px`
-    contextMenuRef.current.style.left = `${clickPosition.x}px`
+  function updateContextMenuPosition() {
+    contextMenuRef.current.style.top = `${clickPosition.y}px`;
+    contextMenuRef.current.style.left = `${clickPosition.x}px`;
   }
 
   useLayoutEffect(() => {
@@ -49,7 +55,31 @@ const Playlist = ({ classes, coverUrl, title, description, toggleScrolling }) =>
     if (isContextMenuOpen) {
       updateContextMenuPosition();
     }
-  })
+  });
+
+  useEffect(() => {
+    if (!isContextMenuOpen) return;
+
+    function handleClickAway(event) {
+      if (!contextMenuRef.current.contains(event.target)) {
+        closeContextMenu();
+      }
+    }
+
+    function handleEsc(event) {
+      if (event.keyCode === 27) {
+        closeContextMenu();
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickAway);
+    document.addEventListener("keydown", handleEsc);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickAway);
+      document.removeEventListener("keydown", handleEsc);
+    };
+  });
 
   function openContexMenu(event) {
     event.preventDefault();
@@ -57,12 +87,10 @@ const Playlist = ({ classes, coverUrl, title, description, toggleScrolling }) =>
     clickPosition.x = event.clientX;
     clickPosition.y = event.clientY;
 
-
     setIsContextMenuOpen(true);
   }
 
   function closeContextMenu() {
-
     setIsContextMenuOpen(false);
   }
 
@@ -84,7 +112,6 @@ const Playlist = ({ classes, coverUrl, title, description, toggleScrolling }) =>
           ref={contextMenuRef}
           menuItems={menuItems}
           classes="fixed bg-[#282828] text-[#eaeaea] text-sm divide-y divide-[#3e3e3e] p-1 rounded shadow-xl cursor-default whitespace-nowrap z-10"
-          onClose={closeContextMenu}
         />
       )}
     </a>

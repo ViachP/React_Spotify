@@ -1,34 +1,7 @@
 import React from "react";
-import { useEffect } from "react";
 import PlaylistContextMenuItem from "./PlaylistContextMenuItem";
 
-const PlaylistContextMenu = (
-  { classes, menuItems, onClose: handleClose },
-  ref
-) => {
-  useEffect(() => {
-    if (!handleClose) return;
-
-    function handleClickAway(event) {
-      if (!ref.current.contains(event.target)) {
-        handleClose();
-      }
-    }
-
-    function handleEsc(event) {
-      if (event.keyCode === 27) {
-        handleClose();
-      }
-    }
-
-    document.addEventListener("mousedown", handleClickAway);
-    document.addEventListener("keydown", handleEsc);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickAway);
-      document.removeEventListener("keydown", handleEsc);
-    };
-  });
+const PlaylistContextMenu = ({ classes, menuItems }, ref) => {
 
   return (
     <ul className={classes} ref={ref}>
