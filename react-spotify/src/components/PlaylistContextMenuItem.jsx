@@ -4,23 +4,36 @@ import { ChevronRightIcon } from "@heroicons/react/24/outline";
 
 const PlaylistContextMenuItem = ({ children: label, subMenuItems }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [menuPossitionClass, setMenuPossitionClass] = useState('left-full')
+  const [menuPossitionXClass, setMenuPossitionXClass] = useState('left-full');
+  const [menuPossitionYClass, setMenuPossitionYClass] = useState('top-0');
   const menuItemRef = useRef(null);
 
-  function getMenuPossitionClass () {
+  function getMenuPossitionXClass () {
 
     const menuItem = menuItemRef.current;
-    const menuWidth = menuItem.offsetWidth;
+    const menuItemWidth = menuItem.offsetWidth;
     const windowWidth = window.innerWidth;
-    const menuItemEndCoordinate = menuItem.getBoundingClientRect().right;
-    const shouldMoveMenuLeft = menuWidth > windowWidth - menuItemEndCoordinate;
+    const menuItemRightCoordX = menuItem.getBoundingClientRect().right;
+    const shouldMoveMenuLeft = menuItemWidth > windowWidth - menuItemRightCoordX;
 
     return  shouldMoveMenuLeft ? 'right-full' : 'left-full';
   }
 
+  function getMenuPossitionYClass () {
+
+    const windowHeight = window.innerHeight;
+    const menuItem = menuItemRef.current;
+    const menuHeight = menuItem.offsetHeight * subMenuItems.length;
+    const menuItemBottomCoordY = menuItem.getBoundingClientRect().bottom;
+    const shouldMoveMenuUp = menuHeight > windowHeight - menuItemBottomCoordY;
+
+    return  shouldMoveMenuUp ? 'bottom-0' : 'top-0';
+  }
+
   function openMenu () {
     setIsMenuOpen(true);
-    setMenuPossitionClass(getMenuPossitionClass());
+    setMenuPossitionXClass(getMenuPossitionXClass());
+    setMenuPossitionYClass(getMenuPossitionYClass());
   }
   function closeMenu () {
     setIsMenuOpen(false);
@@ -36,7 +49,7 @@ const PlaylistContextMenuItem = ({ children: label, subMenuItems }) => {
         {isMenuOpen && (
           <PlaylistContextMenu
             menuItems={subMenuItems}
-            classes={`bg-[#282828] text-[#eaeaea] text-sm p-1 rounded shadow-xl cursor-default absolute top-0 ${menuPossitionClass}`}
+            classes={`bg-[#282828] text-[#eaeaea] text-sm p-1 rounded shadow-xl cursor-default absolute ${menuPossitionYClass} ${menuPossitionXClass}`}
           />
         )}
       </li>
