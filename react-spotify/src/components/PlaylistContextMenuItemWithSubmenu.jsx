@@ -12,7 +12,7 @@ const PlaylistContextMenuItemWithSubmenu = ({
     positionClasses: "",
   });
   const menuItemRef = useRef(null);
-  let closeMenuTimer = null;
+  const closeMenuTimer = useRef(null);
 
   function getMenuPositionXClass() {
     const menuItem = menuItemRef.current;
@@ -42,11 +42,7 @@ const PlaylistContextMenuItemWithSubmenu = ({
   function openMenu() {
     closePreviousSubmenuIfOpen(startCloseMenuTimer);
 
-    if (closeMenuTimer) {
-      stopCloseMenuTimer();
-
-      return;
-    }
+    
     setMenuState({
       isOpen: true,
       positionClasses: getMenuPositionClasses(),
@@ -61,11 +57,11 @@ const PlaylistContextMenuItemWithSubmenu = ({
   }
 
   function startCloseMenuTimer() {
-    closeMenuTimer = setTimeout(closeMenu, 100);
+    closeMenuTimer.current = setTimeout(closeMenu, 100);
   }
 
   function stopCloseMenuTimer() {
-    clearTimeout(closeMenuTimer);
+    clearTimeout(closeMenuTimer.current);
   }
 
   useEffect(() => stopCloseMenuTimer);
