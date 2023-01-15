@@ -1,8 +1,17 @@
-import React from 'react';
-import PlaylistContextMenuItem from './PlaylistContextMenuItem';
+import React from "react";
+import PlaylistContextMenuItem from "./PlaylistContextMenuItem";
 import PlaylistContextMenuItemWithSubmenu from "./PlaylistContextMenuItemWithSubmenu";
 
 const PlaylistContextMenu = ({ classes, menuItems }, ref) => {
+  let closePreviousSubmenu = null;
+
+  function closePreviousSubmenuIfOpen(closeSubmenu = null) {
+    if (closePreviousSubmenu) {
+      closePreviousSubmenu();
+    }
+    closePreviousSubmenu = closeSubmenu;
+  }
+
   return (
     <ul className={classes} ref={ref}>
       {menuItems.map(({ label, subMenuItems }) => {
@@ -11,6 +20,7 @@ const PlaylistContextMenu = ({ classes, menuItems }, ref) => {
             <PlaylistContextMenuItemWithSubmenu
               key={label}
               subMenuItems={subMenuItems}
+              onMouseEnter={closePreviousSubmenuIfOpen}
             >
               {label}
             </PlaylistContextMenuItemWithSubmenu>
@@ -18,7 +28,12 @@ const PlaylistContextMenu = ({ classes, menuItems }, ref) => {
         }
 
         return (
-          <PlaylistContextMenuItem key={label}>{label}</PlaylistContextMenuItem>
+          <PlaylistContextMenuItem
+            key={label}
+            onMouseEnter={closePreviousSubmenuIfOpen}
+          >
+            {label}
+          </PlaylistContextMenuItem>
         );
       })}
     </ul>
