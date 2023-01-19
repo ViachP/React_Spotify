@@ -15,8 +15,8 @@ const menuItems = [
     subMenuItems: [
       {
         label: "Copy link to playlist",
-        alternateLabel: 'Copy Spotify UR',
-        classes: 'min-w-[150px]',
+        alternateLabel: "Copy Spotify UR",
+        classes: "min-w-[150px]",
       },
       {
         label: "Embed playlist",
@@ -72,24 +72,18 @@ const Playlist = ({
   useLayoutEffect(() => {
     toggleScrolling(!isContextMenuOpen);
 
-    if (isContextMenuOpen) {
-      updateContextMenuPosition();
-    }
+    if (isContextMenuOpen) updateContextMenuPosition();
   });
 
   useEffect(() => {
     if (!isContextMenuOpen) return;
 
     function handleClickAway(event) {
-      if (!contextMenuRef.current.contains(event.target)) {
-        closeContextMenu();
-      }
+      if (!contextMenuRef.current.contains(event.target)) closeContextMenu();
     }
 
-    function handleEsc(event) {
-      if (event.keyCode === 27) {
-        closeContextMenu();
-      }
+    function handleEsc({ key }) {
+      if (key === "Escape") closeContextMenu();
     }
 
     document.addEventListener("mousedown", handleClickAway);
@@ -131,7 +125,7 @@ const Playlist = ({
         <PlaylistContextMenu
           ref={contextMenuRef}
           menuItems={menuItems}
-          classes="fixed bg-[#282828] text-[#eaeaea] text-sm divide-y divide-[#3e3e3e] p-1 rounded shadow-xl cursor-default whitespace-nowrap z-10"
+          classes="fixed divide-y divide-[#3e3e3e]"
         />
       )}
     </a>
