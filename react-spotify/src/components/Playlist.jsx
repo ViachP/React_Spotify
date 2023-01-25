@@ -13,7 +13,7 @@ function generateMenuItems(isAlternate = false) {
     },
     {
       label: "Share",
-      subMenuItems: [
+      submenuItems: [
         {
           label: isAlternate ? "Copy Spotify URI" : "Copy link to playlist",
           classes: "min-w-[150px]",
@@ -40,8 +40,6 @@ const Playlist = ({
   toggleScrolling,
 }) => {
   const [menuItems, setMenuItems] = useState(generateMenuItems);
-
-  // const { open: openMenu, isOpen: isMenuOpen, ref: menuRef } = useMenu();
 
   const menu = useMenu(menuItems);
 
