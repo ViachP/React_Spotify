@@ -6,33 +6,7 @@ import PlaylistDescription from "./PlaylistDescription";
 import PlaylistTitle from "./PlaylistTitle";
 import useMenu from "../hooks/useContextMenu";
 import BaseToast from "./BaseToast";
-
-function generateMenuItems(isAlternate = false) {
-  return [
-    {
-      label: "Add to Your Library",
-    },
-    {
-      label: "Share",
-      submenuItems: [
-        {
-          label: isAlternate ? "Copy Spotify URI" : "Copy link to playlist",
-          classes: "min-w-[150px]",
-          action: () => console.log("action"),
-        },
-        {
-          label: "Embed playlist",
-        },
-      ],
-    },
-    {
-      label: "About recommendations",
-    },
-    {
-      label: "Open in Desktop app",
-    },
-  ];
-}
+import { useRef } from "react";
 
 const Playlist = ({
   classes,
@@ -41,6 +15,42 @@ const Playlist = ({
   description,
   toggleScrolling,
 }) => {
+  const [isToastShown, setIsToastShown] = useState();
+
+  const closeToastTimer = useRef();
+
+  function generateMenuItems(isAlternate = false) {
+    return [
+      {
+        label: "Add to Your Library",
+      },
+      {
+        label: "Share",
+        submenuItems: [
+          {
+            label: isAlternate ? "Copy Spotify URI" : "Copy link to playlist",
+            classes: "min-w-[150px]",
+            action: () => {
+              navigator.clipboard.writeText(title).then(() => {
+                menu.close();
+                showToast();
+              });
+            },
+          },
+          {
+            label: "Embed playlist",
+          },
+        ],
+      },
+      {
+        label: "About recommendations",
+      },
+      {
+        label: "Open in Desktop app",
+      },
+    ];
+  }
+
   const [menuItems, setMenuItems] = useState(generateMenuItems);
 
   const menu = useMenu(menuItems);
@@ -66,6 +76,16 @@ const Playlist = ({
       document.removeEventListener("keyup", handleAltKeyup);
     };
   });
+
+  function showToast() {
+    setIsToastShown(true);
+
+    closeToastTimer.current = setTimeout(hideToast, 3000);
+  }
+
+  function hideToast() {
+    setIsToastShown(false);
+  }
 
   const bgClasses = menu.isOpen
     ? "bg-[#272727]"
@@ -93,7 +113,7 @@ const Playlist = ({
           />
         )}
       </a>
-      <BaseToast />
+      {isToastShown && <BaseToast>Link copied to clipboard</BaseToast>}
     </>
   );
 };

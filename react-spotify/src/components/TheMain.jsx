@@ -88,6 +88,7 @@ const TheMain = ({ toggleScrolling }) => {
             ))}
           </div>
         </div>
+        
         <div>
           <div className="flex flex-wrap justify-between items-end gap-x-6 mb-[18px]">
             <div>
