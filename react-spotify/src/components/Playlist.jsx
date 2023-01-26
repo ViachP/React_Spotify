@@ -5,20 +5,15 @@ import PlaylistCover from "./PlaylistCover";
 import PlaylistDescription from "./PlaylistDescription";
 import PlaylistTitle from "./PlaylistTitle";
 import useMenu from "../hooks/useContextMenu";
-import BaseToast from "./BaseToast";
-import { useRef } from "react";
 
 const Playlist = ({
   classes,
   coverUrl,
   title,
   description,
+  showToast,
   toggleScrolling,
 }) => {
-  const [isToastShown, setIsToastShown] = useState();
-
-  const closeToastTimer = useRef();
-
   function generateMenuItems(isAlternate = false) {
     return [
       {
@@ -33,7 +28,7 @@ const Playlist = ({
             action: () => {
               navigator.clipboard.writeText(title).then(() => {
                 menu.close();
-                showToast();
+                showToast("Link copied to clipboard");
               });
             },
           },
@@ -77,44 +72,31 @@ const Playlist = ({
     };
   });
 
-  function showToast() {
-    setIsToastShown(true);
-
-    closeToastTimer.current = setTimeout(hideToast, 3000);
-  }
-
-  function hideToast() {
-    setIsToastShown(false);
-  }
-
   const bgClasses = menu.isOpen
     ? "bg-[#272727]"
     : "bg-[#181818] hover:bg-[#272727]";
 
   return (
-    <>
-      <a
-        href="/"
-        className={`relative p-4 rounded-md duration-200 group ${classes} ${bgClasses}`}
-        onClick={(event) => event.preventDefault()}
-        onContextMenu={menu.open}
-      >
-        <div className="relative">
-          <PlaylistCover url={coverUrl} />
-          <PlaylistButtonPlay />
-        </div>
-        <PlaylistTitle title={title} />
-        <PlaylistDescription description={description} />
-        {menu.isOpen && (
-          <PlaylistContextMenu
-            ref={menu.ref}
-            menuItems={menu.items}
-            classes="fixed divide-y divide-[#3e3e3e]"
-          />
-        )}
-      </a>
-      {isToastShown && <BaseToast>Link copied to clipboard</BaseToast>}
-    </>
+    <a
+      href="/"
+      className={`relative p-4 rounded-md duration-200 group ${classes} ${bgClasses}`}
+      onClick={(event) => event.preventDefault()}
+      onContextMenu={menu.open}
+    >
+      <div className="relative">
+        <PlaylistCover url={coverUrl} />
+        <PlaylistButtonPlay />
+      </div>
+      <PlaylistTitle title={title} />
+      <PlaylistDescription description={description} />
+      {menu.isOpen && (
+        <PlaylistContextMenu
+          ref={menu.ref}
+          menuItems={menu.items}
+          classes="fixed divide-y divide-[#3e3e3e]"
+        />
+      )}
+    </a>
   );
 };
 

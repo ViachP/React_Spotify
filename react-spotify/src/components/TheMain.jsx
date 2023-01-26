@@ -58,7 +58,7 @@ const playlists = [
   },
 ];
 
-const TheMain = ({ toggleScrolling }) => {
+const TheMain = ({ showToast, toggleScrolling }) => {
   return (
     <main className="text-white relative bg-gradient-to-b from-[#1f1f1f] to-[#121212]">
       {/* <div className="h-[275px] bg-gradient-to-b from-[#1f1f1f] to-[#121212] absolute w-full"></div> */}
@@ -83,12 +83,13 @@ const TheMain = ({ toggleScrolling }) => {
               <Playlist
                 key={playlists.tittle}
                 {...playlist}
+                showToast={showToast}
                 toggleScrolling={toggleScrolling}
               />
             ))}
           </div>
         </div>
-        
+
         <div>
           <div className="flex flex-wrap justify-between items-end gap-x-6 mb-[18px]">
             <div>
