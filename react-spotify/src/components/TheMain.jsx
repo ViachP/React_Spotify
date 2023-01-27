@@ -4,55 +4,55 @@ import Playlist from "./Playlist";
 const playlists = [
   {
     classes: "",
-    tittle: "Playlist Title 1",
+    title: "Playlist Title 1",
     description: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
     coverUrl: "https://fakeimg.pl/600/581c87/fff?text=Cover&font=lobster",
   },
   {
     classes: "hidden sm:block",
-    tittle: "Playlist Title 2",
+    title: "Playlist Title 2",
     description: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
     coverUrl: "https://fakeimg.pl/600/713f12/fff?text=Cover&font=lobster",
   },
   {
     classes: "hidden lg:block",
-    tittle: "Playlist Title 3",
+    title: "Playlist Title 3",
     description: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
     coverUrl: "https://fakeimg.pl/600/14532d/fff?text=Cover&font=lobster",
   },
   {
     classes: "hidden xl:block",
-    tittle: "Playlist Title 4",
+    title: "Playlist Title 4",
     description: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
     coverUrl: "https://fakeimg.pl/600/881337/fff?text=Cover&font=lobster",
   },
   {
     classes: "hidden 2xl:block",
-    tittle: "Playlist Title 5",
+    title: "Playlist Title 5",
     description: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
     coverUrl: "https://fakeimg.pl/600/713f12/fff?text=Cover&font=lobster",
   },
   {
     classes: "hidden 3xl:block",
-    tittle: "Playlist Title 6",
+    title: "Playlist Title 6",
     description: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
     coverUrl: "https://fakeimg.pl/600/14532d/fff?text=Cover&font=lobster",
   },
   {
     classes: "hidden 4xl:block",
-    tittle: "Playlist Title 7",
+    title: "Playlist Title 7",
     description: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
     coverUrl: "https://fakeimg.pl/600/881337/fff?text=Cover&font=lobster",
   },
   {
     classes: "hidden 5xl:block",
-    tittle: "Playlist Title 8",
+    title: "Playlist Title 8",
     description: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
     coverUrl: "https://fakeimg.pl/600/713f12/fff?text=Cover&font=lobster",
   },
   {
     classes: "hidden 6xl:block",
-    tittle: "Playlist Title 9",
+    title: "Playlist Title 9",
     description: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
     coverUrl: "https://fakeimg.pl/600/14532d/fff?text=Cover&font=lobster",
   },
@@ -81,10 +81,10 @@ const TheMain = ({ showToast, toggleScrolling }) => {
           <div className="grid sm:grid-cols-playlists-mobile md:grid-cols-playlists-tablet lg:grid-cols-playlists-desktop gap-5">
             {playlists.map((playlist) => (
               <Playlist
-                key={playlists.tittle}
-                {...playlist}
+                key={playlist.title}
                 showToast={showToast}
                 toggleScrolling={toggleScrolling}
+                {...playlist}
               />
             ))}
           </div>

@@ -8,39 +8,37 @@ import TheSidebarOverlay from "./components/TheSidebarOverlay";
 
 function App() {
   const [toastMessage, setToastMessage] = useState();
-  const [isToastShown, setIsToastShown] = useState();
   const closeToastTimer = useRef();
+  const toastRef = useRef();
   const contentWrapperRef = useRef(null);
   let isScrollingEnabled = true;
 
   function showToast(message) {
+    clearTimeout(closeToastTimer.current);
     setToastMessage(message);
-    setIsToastShown(true);
 
-    closeToastTimer.current = setTimeout(hideToast, 3000);
+    toastRef.current.show();
+
+    closeToastTimer.current = setTimeout(toastRef.current.hide, 3000);
   }
 
-  function hideToast() {
-    setIsToastShown(false);
-  }
-
-  function toggleScrolling (isEnabled) {
+  function toggleScrolling(isEnabled) {
     isScrollingEnabled = isEnabled;
   }
 
-  function handleScrolling (event) {
+  function handleScrolling(event) {
     if (isScrollingEnabled) return;
 
     event.preventDefault();
     event.stopPrapagation();
-  } 
+  }
 
   useEffect(() => {
     const contentWrapper = contentWrapperRef.current;
-    contentWrapper.addEventListener('wheel', handleScrolling);
+    contentWrapper.addEventListener("wheel", handleScrolling);
 
-    return () => contentWrapper.removeEventListener('wheel', handleScrolling);
-  })
+    return () => contentWrapper.removeEventListener("wheel", handleScrolling);
+  });
 
   return (
     <>
@@ -53,9 +51,8 @@ function App() {
         </div>
       </div>
       <TheRegistration />
-      {isToastShown && <BaseToast>{toastMessage}</BaseToast>}
-
+      <BaseToast ref={toastRef}>{toastMessage}</BaseToast>
     </>
-  )
+  );
 }
 export default App;
