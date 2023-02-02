@@ -7,7 +7,7 @@ const NavItem = ({ classes, icon, onClick, children: label }) => {
 
     event.preventDefault();
 
-    onClick();
+    onClick(event.currentTarget);
   }
 
   return (
