@@ -10,8 +10,15 @@ import TheSidebarOverlay from "./components/TheSidebarOverlay";
 function App() {
   const popoverRef = useRef();
   const toastRef = useRef();
-  const contentWrapperRef = useRef(null);
+  const contentWrapperRef = useRef();
   let isScrollingEnabled = true;
+
+  useEffect(() => {
+    const contentWrapper = contentWrapperRef.current;
+    contentWrapper.addEventListener("wheel", handleScrolling);
+
+    return () => contentWrapper.removeEventListener("wheel", handleScrolling);
+  });
 
   function showPopover() {
     popoverRef.current.show();
@@ -32,12 +39,7 @@ function App() {
     event.stopPrapagation();
   }
 
-  useEffect(() => {
-    const contentWrapper = contentWrapperRef.current;
-    contentWrapper.addEventListener("wheel", handleScrolling);
-
-    return () => contentWrapper.removeEventListener("wheel", handleScrolling);
-  });
+  
 
   return (
     <>

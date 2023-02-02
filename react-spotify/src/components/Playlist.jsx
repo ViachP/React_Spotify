@@ -1,10 +1,10 @@
 import { useState, useEffect, useLayoutEffect } from "react";
+import useMenu from "../hooks/useContextMenu";
 import PlaylistButtonPlay from "./PlaylistButtonPlay";
 import PlaylistContextMenu from "./PlaylistContextMenu";
 import PlaylistCover from "./PlaylistCover";
 import PlaylistDescription from "./PlaylistDescription";
 import PlaylistTitle from "./PlaylistTitle";
-import useMenu from "../hooks/useContextMenu";
 
 const Playlist = ({
   classes,
