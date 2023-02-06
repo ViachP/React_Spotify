@@ -3,10 +3,12 @@ import { useRef } from "react";
 import { useState } from "react";
 import BaseButton from "./BaseButton";
 
-const HIDDEN_CLASSSES = " opacity-0  translate-x-1 pointer-events-none";
+const isSmallScreen = window.innerWidth < 700;
+const translateClass = isSmallScreen ? 'translate-y-1' : 'translate-x-1';
+const HIDDEN_CLASSES = `opacity-0 ${translateClass} pointer-events-none`;
 
 function BasePopover(_, ref) {
-  const [classes, setClasses] = useState(HIDDEN_CLASSSES);
+  const [classes, setClasses] = useState(HIDDEN_CLASSES);
   const [target, setTarget] = useState();
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
@@ -40,20 +42,21 @@ function BasePopover(_, ref) {
 
   function hide() {
     setTarget(null);
-    setClasses(HIDDEN_CLASSSES);
+    setClasses(HIDDEN_CLASSES);
   }
 
   function moveTo(offset) {
+
     nodeRef.current.style.top = `${offset.top}px`;
     nodeRef.current.style.left = `${offset.left}px`;
   }
 
   function calculateTargetOffset(target) {
-    const { top, right, height } = target.getBoundingClientRect();
+    const { top, right,left, height } = target.getBoundingClientRect();
 
     return {
-      top: top - (height / 3) * 2,
-      left: right + 30,
+      top: isSmallScreen ? top + height * 2 : top - (height / 3) * 2,
+      left: isSmallScreen ? left : right + 30,
     };
   }
 
