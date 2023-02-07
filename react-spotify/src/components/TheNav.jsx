@@ -56,7 +56,7 @@ const TheNav = ({ showPopover }) => {
       action: (target) => {
         let offset = null;
 
-        if (window.innerWidth >= 700) {
+        if (window.innerWidth >= 900) {
           const { top, right, height } = target.getBoundingClientRect();
 
           offset = {

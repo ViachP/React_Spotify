@@ -2,10 +2,10 @@ import { useEffect, forwardRef, useImperativeHandle } from "react";
 import { useRef } from "react";
 import { useState } from "react";
 import BaseButton from "./BaseButton";
-import BasePopoverTriangle from './BasePopoverTriangle';
+import BasePopoverTriangle from "./BasePopoverTriangle";
 
-const isSmallScreen = window.innerWidth < 700;
-const translateClass = isSmallScreen ? 'translate-y-1' : 'translate-x-1';
+const isSmallScreen = window.innerWidth < 900;
+const translateClass = isSmallScreen ? "translate-y-1" : "translate-x-1";
 const HIDDEN_CLASSES = `opacity-0 ${translateClass} pointer-events-none`;
 
 function BasePopover(_, ref) {
@@ -18,15 +18,23 @@ function BasePopover(_, ref) {
   useEffect(() => {
     if (!target) return;
 
+    function handleResize() {
+      if (screenHasBecomeSmall() || screenHasBecomeWide()) hide();
+    }
+
     function handleClickAway(event) {
       if (target.parentNode.contains(event.target)) return;
 
       if (!nodeRef.current.contains(event.target)) hide();
     }
 
+    window.addEventListener("resize", handleResize);
     document.addEventListener("mousedown", handleClickAway);
 
-    return () => document.removeEventListener("mousedown", handleClickAway);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      document.removeEventListener("mousedown", handleClickAway);
+    };
   });
 
   useImperativeHandle(ref, () => ({ show }));
@@ -47,18 +55,25 @@ function BasePopover(_, ref) {
   }
 
   function moveTo(offset) {
-
     nodeRef.current.style.top = `${offset.top}px`;
     nodeRef.current.style.left = `${offset.left}px`;
   }
 
   function calculateTargetOffset(target) {
-    const { top, right,left, height } = target.getBoundingClientRect();
+    const { top, right, left, height } = target.getBoundingClientRect();
 
     return {
       top: isSmallScreen ? top + height * 2 : top - (height / 3) * 2,
       left: isSmallScreen ? left : right + 30,
     };
+  }
+
+  function screenHasBecomeSmall() {
+    return window.innerWidth < 900 && !isSmallScreen;
+  }
+
+  function screenHasBecomeWide() {
+    return window.innerWidth >= 900 && isSmallScreen;
   }
 
   return (
