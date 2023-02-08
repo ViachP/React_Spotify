@@ -1,3 +1,4 @@
+import { MIN_DESKTOP_WIDTH } from '../utils';
 import React from "react";
 import {
   HomeIcon,
@@ -56,7 +57,7 @@ const TheNav = ({ showPopover }) => {
       action: (target) => {
         let offset = null;
 
-        if (window.innerWidth >= 900) {
+        if (window.innerWidth >= MIN_DESKTOP_WIDTH) {
           const { top, right, height } = target.getBoundingClientRect();
 
           offset = {

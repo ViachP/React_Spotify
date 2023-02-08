@@ -1,17 +1,20 @@
-import { debounce } from "../utils";
+import { MIN_DESKTOP_WIDTH, debounce } from "../utils";
 import { useEffect, forwardRef, useImperativeHandle } from "react";
 import { useRef } from "react";
 import { useState } from "react";
 import BaseButton from "./BaseButton";
 import BasePopoverTriangle from "./BasePopoverTriangle";
 
+function isCurrentWindowWidthSmall() {
+  return window.innerWidth < MIN_DESKTOP_WIDTH;
+}
 
-const MIN_DESKTOP_WIDTH = 900;
+function isCurrentWindowWidthBig() {
+  return window.innerWidth >= MIN_DESKTOP_WIDTH;
+}
 
 function BasePopover(_, ref) {
-  const [isSmallScreen, setIsSmallScreen] = useState(
-    window.innerWidth < MIN_DESKTOP_WIDTH
-  );
+  const [isSmallScreen, setIsSmallScreen] = useState(isCurrentWindowWidthSmall);
   const [classes, setClasses] = useState(getHiddenClasses);
   const [target, setTarget] = useState();
   const [title, setTitle] = useState();
@@ -20,18 +23,16 @@ function BasePopover(_, ref) {
   const changeWidthTimer = useRef();
 
   useEffect(() => {
-
     function handleResize() {
-      if (screenHasBecomeSmall() || screenHasBecomeWide()) {
-        hide();
+      if (!screenHasBecomeSmall() && !screenHasBecomeBig()) return;
+      hide();
 
-        clearTimeout(changeWidthTimer.current);
+      clearTimeout(changeWidthTimer.current);
 
-        changeWidthTimer.current = setTimeout(
-          () => setIsSmallScreen(window.innerWidth < MIN_DESKTOP_WIDTH),
-          300
-        );
-      }
+      changeWidthTimer.current = setTimeout(
+        () => setIsSmallScreen(isCurrentWindowWidthSmall),
+        300
+      );
     }
 
     function handleClickAway(event) {
@@ -42,7 +43,7 @@ function BasePopover(_, ref) {
 
     const debounceResize = debounce.bind(null, handleResize, 300);
 
-    window.addEventListener('resize', debounceResize);
+    window.addEventListener("resize", debounceResize);
 
     document.addEventListener("mousedown", handleClickAway);
 
@@ -70,14 +71,14 @@ function BasePopover(_, ref) {
   }
 
   function getHiddenClasses() {
-    const translateClass = isSmallScreen ? 'translate-y-1' : 'translate-x-1';
+    const translateClass = isSmallScreen ? "translate-y-1" : "translate-x-1";
 
     return `opacity-0 ${translateClass} pointer-events-none`;
   }
 
-  function moveTo(offset) {
-    nodeRef.current.style.top = `${offset.top}px`;
-    nodeRef.current.style.left = `${offset.left}px`;
+  function moveTo({top, left}) {
+    nodeRef.current.style.top = `${top}px`;
+    nodeRef.current.style.left = `${left}px`;
   }
 
   function calculateTargetOffset(target) {
@@ -90,11 +91,11 @@ function BasePopover(_, ref) {
   }
 
   function screenHasBecomeSmall() {
-    return window.innerWidth < MIN_DESKTOP_WIDTH && !isSmallScreen;
+    return isCurrentWindowWidthSmall() && !isSmallScreen;
   }
 
-  function screenHasBecomeWide() {
-    return window.innerWidth >= MIN_DESKTOP_WIDTH && isSmallScreen;
+  function screenHasBecomeBig() {
+    return isCurrentWindowWidthBig() && isSmallScreen;
   }
 
   return (
@@ -108,7 +109,7 @@ function BasePopover(_, ref) {
         <BaseButton onClick={hide}>Not now</BaseButton>
         <BaseButton primary>Log in</BaseButton>
       </div>
-      <BasePopoverTriangle side={isSmallScreen ? 'top' : 'left'} />
+      <BasePopoverTriangle side={isSmallScreen ? "top" : "left"} />
     </div>
   );
 }
