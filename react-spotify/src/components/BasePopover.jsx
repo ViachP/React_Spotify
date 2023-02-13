@@ -13,10 +13,10 @@ function BasePopover(_, ref) {
   const { move, target, setTarget, isSmallScreen } = usePosition(nodeRef, hide);
   const [classes, setClasses] = useState(getHiddenClasses);
 
-  useClickAway(nodeRef, hide, shouldPreventHideng);
+  useClickAway(nodeRef, hide, shouldHide);
 
-  function shouldPreventHideng(event) {
-    return target && target.parentNode.contains(event.target);
+  function shouldHide(event) {
+    return !target?.parentNode.contains(event.target);
   }
 
   useImperativeHandle(ref, () => ({ show }));
