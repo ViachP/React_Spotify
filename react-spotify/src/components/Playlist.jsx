@@ -12,7 +12,7 @@ const Playlist = ({
   title,
   description,
   showToast,
-  showPopover,
+  openModal,
   toggleScrolling,
 }) => {
   function generateMenuItems(isAlternate = false) {
@@ -21,8 +21,8 @@ const Playlist = ({
         label: "Add to Your Library",
         action: () => {
           menu.close();
-          document.querySelector('nav a:nth-child(4)').click();
-        }
+          document.querySelector("nav a:nth-child(4)").click();
+        },
       },
       {
         label: "Share",
@@ -44,6 +44,10 @@ const Playlist = ({
       },
       {
         label: "About recommendations",
+        action: () => {
+          menu.close();
+          openModal();
+        },
       },
       {
         label: "Open in Desktop app",
