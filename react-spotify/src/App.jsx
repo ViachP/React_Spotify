@@ -1,4 +1,5 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
+import useEvent from './hooks/useEvent';
 import BaseModal from "./components/BaseModal";
 import BasePopover from "./components/BasePopover";
 import BaseToast from "./components/BaseToast";
@@ -15,12 +16,12 @@ function App() {
   const contentWrapperRef = useRef();
   let isScrollingEnabled = true;
 
-  useEffect(() => {
-    const contentWrapper = contentWrapperRef.current;
-    contentWrapper.addEventListener("wheel", handleScrolling);
-
-    return () => contentWrapper.removeEventListener("wheel", handleScrolling);
-  });
+  useEvent(
+    'wheel',
+    handleScrolling,
+    () => true,
+    () => contentWrapperRef.current
+  );
 
   function openModal() {
     setIsModalOpen(true);
