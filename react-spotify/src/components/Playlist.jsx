@@ -1,12 +1,12 @@
 import { useState, useLayoutEffect } from "react";
 import useEvent from "../hooks/useEvent";
 import useMenu from "../hooks/useContextMenu";
-import BaseModal from './BaseModal';
 import PlaylistButtonPlay from "./PlaylistButtonPlay";
 import PlaylistContextMenu from "./PlaylistContextMenu";
 import PlaylistCover from "./PlaylistCover";
 import PlaylistDescription from "./PlaylistDescription";
 import PlaylistTitle from "./PlaylistTitle";
+import TheModalRecommendations from './TheModalRecommendations';
 
 const Playlist = ({
   classes,
@@ -105,7 +105,7 @@ const Playlist = ({
           classes="fixed divide-y divide-[#3e3e3e]"
         />
       )}
-      {isModalOpen && <BaseModal onClose={closeModal} />}
+      {isModalOpen && <TheModalRecommendations onClose={closeModal} />}
     </a>
   );
 };
