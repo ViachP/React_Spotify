@@ -58,7 +58,7 @@ const playlists = [
   },
 ];
 
-const TheMain = ({ showToast, openModal, toggleScrolling }) => {
+const TheMain = ({ showToast, toggleScrolling }) => {
   return (
     <main className="text-white relative bg-gradient-to-b from-[#1f1f1f] to-[#121212]">
       {/* <div className="h-[275px] bg-gradient-to-b from-[#1f1f1f] to-[#121212] absolute w-full"></div> */}
@@ -83,7 +83,6 @@ const TheMain = ({ showToast, openModal, toggleScrolling }) => {
               <Playlist
                 key={playlist.title}
                 showToast={showToast}
-                openModal={openModal}
                 toggleScrolling={toggleScrolling}
                 {...playlist}
               />
