@@ -1,6 +1,7 @@
 import { useState, useLayoutEffect } from "react";
 import useEvent from "../hooks/useEvent";
 import useMenu from "../hooks/useContextMenu";
+import useModal from '../hooks/useModal';
 import PlaylistButtonPlay from "./PlaylistButtonPlay";
 import PlaylistContextMenu from "./PlaylistContextMenu";
 import PlaylistCover from "./PlaylistCover";
@@ -47,7 +48,7 @@ const Playlist = ({
         label: "About recommendations",
         action: () => {
           menu.close();
-          openModal();
+          modal.open();
         },
       },
       {
@@ -57,8 +58,8 @@ const Playlist = ({
   }
 
   const [menuItems, setMenuItems] = useState(generateMenuItems);
-  const [isModalOpen, setIsModalOpen] = useState();
   const menu = useMenu(menuItems);
+  const modal = useModal();
 
   useLayoutEffect(() => toggleScrolling(!menu.isOpen));
 
@@ -71,14 +72,6 @@ const Playlist = ({
 
   function handleAltKeyup({ key }) {
     if (key === "Alt") setMenuItems(generateMenuItems());
-  }
-
-  function openModal() {
-    setIsModalOpen(true);
-  }
-
-  function closeModal() {
-    setIsModalOpen(false);
   }
 
   const bgClasses = menu.isOpen
@@ -105,7 +98,7 @@ const Playlist = ({
           classes="fixed divide-y divide-[#3e3e3e]"
         />
       )}
-      {isModalOpen && <TheModalRecommendations onClose={closeModal} />}
+      {modal.isOpen && <TheModalRecommendations onClose={modal.isOpen} />}
     </a>
   );
 };
