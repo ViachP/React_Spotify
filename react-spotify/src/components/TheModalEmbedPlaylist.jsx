@@ -1,5 +1,5 @@
-import BaseButton from './BaseButton';
-import BaseModal from './BaseModal';
+import BaseButton from "./BaseButton";
+import BaseModal from "./BaseModal";
 
 function TheModalEmbedPlaylist({ onClose: handleClose }) {
   return (
@@ -8,13 +8,17 @@ function TheModalEmbedPlaylist({ onClose: handleClose }) {
         Embed Playlist
       </h1>
       <div className="py-6 px-8 text-neutral-500 text-[13px]">
-        Lorem ipsum dolor sit amet{' '}
+        Lorem ipsum dolor sit amet{" "}
         <a href="/" className="text-white font-bold hover:underline">
           consectetur adipisicing elit
         </a>
         . Aliquam sit perferendis soluta architecto? Adipisci, atque.
       </div>
-      <div className="text-right pb-6 px-8">
+      <div className="flex justify-end items-center gap-4 pb-6 px-8">
+        <label className="inline-flex items-center gap-2">
+          <input type="checkbox" />
+          <span className="text-sm text-neutral-400">Show code</span>
+        </label>
         <BaseButton accent>Copy</BaseButton>
       </div>
     </BaseModal>
