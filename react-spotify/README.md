@@ -2,7 +2,7 @@
 
 ### [Live Site](###)
 
-![React_Spotify](https://ibb.co/XVB9sm0)
+![React_Spotify](https://i.ibb.co/QXBZNsS/Spoty.png)
 
 **Stack:**
 
