@@ -13,7 +13,7 @@ function TheModalEmbedPlaylist({ onClose: handleClose }) {
         <a href="/" className="text-white font-bold hover:underline">
           consectetur adipisicing elit
         </a>
-        . Aliquam sit perferendis soluta architecto? Adipisci, atque.
+        Aliquam sit perferendis soluta architecto? Adipisci, atque.
       </div>
       <div className="flex justify-end items-center gap-4 pb-6 px-8">
         <BaseCheckbox>Show code</BaseCheckbox>

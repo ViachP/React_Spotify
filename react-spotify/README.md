@@ -1,3 +1,11 @@
 # React_Spotify
 
-![Bank App](https://i.ibb.co/wsT0cVz/work-in-progress-3.png)
+### [Live Site](###)
+
+![React_Spotify](https://ibb.co/XVB9sm0)
+
+**Stack:**
+
+- ReactJS
+- Tailwind CSS
+- Vite
