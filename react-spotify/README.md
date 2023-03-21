@@ -6,6 +6,6 @@
 
 **Stack:**
 
-- ReactJS
+- React 
 - Tailwind CSS
 - Vite
